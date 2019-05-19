@@ -44,7 +44,7 @@ public class ClockAni extends Canvas{
 			Color.rgb(200, 200, 200),
 			Color.rgb(255, 255, 255)
 	};
-	private String sMonth[] =
+	public String sMonth[] =
 		{
 				"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"
 		};
