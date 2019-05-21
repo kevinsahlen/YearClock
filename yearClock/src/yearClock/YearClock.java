@@ -6,6 +6,8 @@ import javax.swing.event.MouseInputListener;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,7 +35,7 @@ public class YearClock extends Application implements MouseInputListener
 	Label lbl;
 	ClockAni drawBG;
 	Canvas drawLoop;
-	EventCreator t;
+	static EventCreator t;
 
 	public static void main(String[] args)
 	{
@@ -88,6 +90,7 @@ public class YearClock extends Application implements MouseInputListener
 private void display() {
 		Stage window = new Stage();
 		Label lbl = new Label("Set date for you event");
+		Label yearlbl = new Label(ClockAni.currentYear+"");
 		Button add = new Button("+");
 		Button sub = new Button("-");
 		Button btnCreate = new Button("Create Event");
@@ -97,6 +100,138 @@ private void display() {
 		cb.getItems().addAll(drawBG.sMonth);
 		
 		
+		
+		cb.setEditable(true);
+		
+		cb.valueProperty().addListener(new ChangeListener<String>() {
+			int cbday = YearClock.t.ld.getDayOfMonth();
+      @Override public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, String t, String t1) {
+      	
+      	int month;
+      	switch (t1)
+      	{
+      		case "JAN":
+      			month = 1;
+      			break;
+
+      		case "FEB":
+      			month = 2;
+      			break;
+
+      		case "MAR":
+      			month = 3;
+      			break;
+
+      		case "APR":
+      			month = 4;
+      			break;
+
+      		case "MAY":
+      			month = 5;
+      			break;
+
+      		case "JUN":
+      			month = 6;
+      			break;
+
+      		case "JUL":
+      			month = 7;
+      			break;
+
+      		case "AUG":
+      			month = 8;
+      			break;
+
+      		case "SEP":
+      			month = 9;
+      			break;
+
+      		case "OCT":
+      			month = 10;
+      			break;
+
+      		case "NOV":
+      			month = 11;
+      			break;
+
+      		case "DEC":
+      			month = 12;
+      			break;
+
+      		default:
+      			month = 1;
+      			System.out.println("error: no month picked");
+      			break;
+      	}
+      	YearClock.t.ld = LocalDate.of(ClockAni.currentYear, month, cbday);
+      	YearClock.t.update();
+      	
+      } 
+  });
+		
+		cb.setOnAction((event) -> {
+			int month;
+    	switch (cb.getSelectionModel().getSelectedItem())
+    	{
+    		case "JAN":
+    			month = 1;
+    			break;
+
+    		case "FEB":
+    			month = 2;
+    			break;
+
+    		case "MAR":
+    			month = 3;
+    			break;
+
+    		case "APR":
+    			month = 4;
+    			break;
+
+    		case "MAY":
+    			month = 5;
+    			break;
+
+    		case "JUN":
+    			month = 6;
+    			break;
+
+    		case "JUL":
+    			month = 7;
+    			break;
+
+    		case "AUG":
+    			month = 8;
+    			break;
+
+    		case "SEP":
+    			month = 9;
+    			break;
+
+    		case "OCT":
+    			month = 10;
+    			break;
+
+    		case "NOV":
+    			month = 11;
+    			break;
+
+    		case "DEC":
+    			month = 12;
+    			break;
+
+    		default:
+    			month = 1;
+    			System.out.println("error: no month picked");
+    			break;
+    	}
+    	System.out.println(month);
+    	System.out.println(t.ld.getDayOfMonth());
+    	t.ld = LocalDate.of(ClockAni.currentYear, month, t.ld.getDayOfMonth());
+    	t.day = t.ld.getDayOfYear();
+    	t.update();
+	});
 		
 		
 		add.setOnAction(e -> {
@@ -127,10 +262,10 @@ private void display() {
       @Override
       public void handle(KeyEvent event) {
           if (event.getCode() == KeyCode.ENTER) {
-              String dateStr = txt.getText();
-              System.out.println(dateStr);
+              int dateStr = Integer.parseInt(txt.getText());
               
-              t.ld = LocalDate.parse(dateStr);
+              System.out.println(dateStr);
+              t.ld = LocalDate.of(ClockAni.currentYear, t.ld.getMonthValue(), dateStr);
               t.day = t.ld.getDayOfYear();
               t.update();
           }
@@ -179,9 +314,10 @@ private void display() {
 		gpane.setAlignment(Pos.CENTER);
 		gpane.add(lbl, 0, 0, 4, 1);
 		gpane.add(add, 0, 1);
-		gpane.add(cb, 1, 1);
-		gpane.add(txt, 2, 1);
-		gpane.add(sub, 3, 1);
+		gpane.add(yearlbl, 1, 1);
+		gpane.add(cb, 2, 1);
+		gpane.add(txt, 3, 1);
+		gpane.add(sub, 4, 1);
 		gpane.add(btnCreate, 1, 2);
 		gpane.add(btnCancel, 2, 2);
 
@@ -250,3 +386,75 @@ private void display() {
 	
 	
 }// class YearClock
+
+
+
+
+
+
+
+
+
+/* 
+
+int day = t.ld.getDayOfMonth();
+int month;
+switch (arg2)
+{
+	case "JAN":
+		month = 1;
+		break;
+
+	case "FEB":
+		month = 2;
+		break;
+
+	case "MAR":
+		month = 3;
+		break;
+
+	case "APR":
+		month = 4;
+		break;
+
+	case "MAY":
+		month = 5;
+		break;
+
+	case "JUN":
+		month = 6;
+		break;
+
+	case "JUL":
+		month = 7;
+		break;
+
+	case "AUG":
+		month = 8;
+		break;
+
+	case "SEP":
+		month = 9;
+		break;
+
+	case "OCT":
+		month = 10;
+		break;
+
+	case "NOV":
+		month = 11;
+		break;
+
+	case "DEC":
+		month = 12;
+		break;
+
+	default:
+		month = 1;
+		System.out.println("error: no month picked");
+		break;
+}
+t.ld = LocalDate.of(ClockAni.currentYear, month, day);
+t.update();
+
+*/

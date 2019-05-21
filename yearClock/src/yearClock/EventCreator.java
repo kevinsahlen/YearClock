@@ -162,9 +162,9 @@ public class EventCreator implements Runnable {
 	public void update () {
 	//event triangle drawer
 		//triVOffset = 0.0465;
-		double angle = (day-0.5)*dayAngle;
 		Year y = Year.of(ClockAni.currentYear);
 		ld = y.atDay(day);
+		double angle = (day-0.5)*dayAngle;
 		
 		triangleX[0] = Math.cos(angle-Math.PI/2)*420+500;
 		triangleX[1] = Math.cos(angle-triVOffset-Math.PI/2)*446+500;
