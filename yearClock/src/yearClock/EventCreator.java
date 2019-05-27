@@ -114,7 +114,6 @@ public class EventCreator implements Runnable {
 			//mouse pos angle to circle, adding 2   (math magic)
 			angle = -Math.atan2(circleX, circleY) + Math.PI;
 			
-			System.out.println(angle);
 			
 			
 			
